@@ -73,6 +73,7 @@ namespace ConsoleApplication
                             Console.WriteLine($"\t\t Id: {person.Person.PersonId}, {person.Person.Firstname} {person.Person.Lastname}, Aged {person.Person.Age}");
                         }
                     }
+                    Console.WriteLine("");
                 }
             }
             catch (Exception ex) {
