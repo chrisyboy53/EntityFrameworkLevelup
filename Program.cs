@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using EntityLevelup.DataAccess.EntityFramework;
 using EntityLevelup.Models;
 
@@ -61,6 +62,18 @@ namespace ConsoleApplication
                     }
                     
                     teamCtx.SaveChanges();
+
+                    var teams = teamCtx.Team.Include(T => T.TeamAllocation).ThenInclude(X => X.Person).ToList();
+
+                    foreach (var team in teams)
+                    {
+                        Console.WriteLine($"In team {team.TeamName}");
+                        var teamAllocations = team.TeamAllocation.ToList();
+                        foreach (var person in teamAllocations)
+                        {
+                            Console.WriteLine($"\t\t Id: {person.Person.PersonId}, {person.Person.Firstname} {person.Person.Lastname}, Aged {person.Person.Age}");
+                        }
+                    }
                 }
             }
             catch (Exception ex) {
